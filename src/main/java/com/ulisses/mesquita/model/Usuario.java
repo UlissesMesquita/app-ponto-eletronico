@@ -19,6 +19,9 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotEmpty
+	@NotBlank(message = "The id cannot be a blank field")
+	@NotNull(message = "The id cannot be empty")
 	private Long id;
 	
 	@NotEmpty

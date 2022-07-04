@@ -2,6 +2,7 @@ package com.ulisses.mesquita.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,17 +31,17 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public Usuario adicionarUsuario(@RequestBody Usuario usuario){
+	public Usuario adicionarUsuario(@RequestBody @Valid Usuario usuario){
 		return usuarioService.salvar(usuario);
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public void deletarUsuario(@PathVariable Long id) {
+	public void deletarUsuario(@PathVariable @Valid Long id) {
 		usuarioService.deletar(id);
 	}
 	
 	@PutMapping("{id}")
-	public void alterarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
+	public void alterarUsuario(@PathVariable @Valid Long id, @RequestBody Usuario usuario){
 		usuarioService.atualizar(id, usuario);
 	}
 }
