@@ -14,37 +14,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ulisses.mesquita.model.Usuario;
-import com.ulisses.mesquita.repository.UsuarioRepository;
+import com.ulisses.mesquita.services.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	//private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	@GetMapping
-	public List<Usuario> listarUsuarios(){
-		return usuarioRepository.findAll();
+	public List<Usuario> listar() {
+		return usuarioService.listar();
 	}
 	
 	@PostMapping
 	public Usuario adicionarUsuario(@RequestBody Usuario usuario){
-		return usuarioRepository.save(usuario);
+		return usuarioService.salvar(usuario);
 	}
 	
-	@DeleteMapping("usuario/delete/{id}")
-	public void deletarUsuario(@PathVariable Long id ) {
-		usuarioRepository.deleteById(id);
+	@DeleteMapping("delete/{id}")
+	public void deletarUsuario(@PathVariable Long id) {
+		usuarioService.deletar(id);
 	}
 	
 	@PutMapping("{id}")
-	public Usuario alterarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-		Usuario usuarioTeste = usuarioRepository.getReferenceById(id);
-		
-		usuarioTeste.setEmail(usuario.getEmail());
-		usuarioTeste.setPassword(usuario.getPassword());
-		
-		return   usuarioRepository.save(usuarioTeste);
+	public void alterarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
+		usuarioService.atualizar(id, usuario);
 	}
 }
